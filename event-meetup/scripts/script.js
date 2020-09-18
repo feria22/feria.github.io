@@ -1,14 +1,13 @@
 
 // timeend = new Date(2020, 0, 1, 0, 0);
-var date = new Date();
-var timeend = new Date(date.getFullYear(), date.getMonth()+1, 1);
-console.log(timeend)
-function helpingTime(timeplace,content,where='afterbegin',replace){
+const date = new Date();
+const timeend = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+function helpingTime(timeplace, content, where = 'afterbegin', replace) {
 
-	if(replace){
-		document.querySelector(timeplace).innerHTML=content;
+	if (replace) {
+		document.querySelector(timeplace).innerHTML = content;
 	}
-	else{document.querySelector(timeplace).insertAdjacentHTML(where,content);}
+	else { document.querySelector(timeplace).insertAdjacentHTML(where, content); }
 
 }
 
@@ -18,30 +17,29 @@ window.onload = () => {
 };
 function Time(timeFor) {
 	let today = new Date();
-	
-	today = Math.floor((timeend-today)/1000);
-	let tsec=today%60; 
-	// console.log(tsec)
-	today=Math.floor(today/60); 
-	if(tsec<10)tsec='0'+tsec;
-	let tmin=today%60; 
-	today=Math.floor(today/60); 
-	if(tmin<10)tmin='0'+tmin;
-	let thour=today%24; 
-	today=Math.floor(today/24);
-	if(thour<10)thour='0'+thour;
-		helpingTime('#time_tsec div',tsec,0,1)
-		helpingTime('#time_tmin div',tmin,0,1)
-		helpingTime('#time_thour div',thour,0,1)
-		helpingTime('#time_today div',today,0,1)
+
+	today = Math.floor((timeend - today) / 1000);
+	let tsec = today % 60;
+	today = Math.floor(today / 60);
+	if (tsec < 10) tsec = '0' + tsec;
+	let tmin = today % 60;
+	today = Math.floor(today / 60);
+	if (tmin < 10) tmin = '0' + tmin;
+	let thour = today % 24;
+	today = Math.floor(today / 24);
+	if (thour < 10) thour = '0' + thour;
+	helpingTime('#time_tsec div', tsec, 0, 1)
+	helpingTime('#time_tmin div', tmin, 0, 1)
+	helpingTime('#time_thour div', thour, 0, 1)
+	helpingTime('#time_today div', today, 0, 1)
 }
-setInterval(Time,1000,'#time_tsec');
+setInterval(Time, 1000, '#time_tsec');
 
 
 
-		
 
-let pastEvetsImgArray=[
+
+const pastEvetsImgArray = [
 	"https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495_960_720.jpg",
 	"https://cdn.pixabay.com/photo/2016/09/17/21/47/audience-1677028_960_720.jpg",
 	"https://cdn.pixabay.com/photo/2016/04/04/03/03/event-1306079_960_720.jpg",
@@ -54,97 +52,97 @@ let pastEvetsImgArray=[
 	"https://cdn.pixabay.com/photo/2015/07/02/10/16/circus-828680_960_720.jpg",
 ];
 
-function genPastImg(i=1){
-	for(i;i<=4;i++){
-		let j=Math.floor(Math.random()*(pastEvetsImgArray.length-0)+0);
-		if(pastEvetsImgArray.length>0){
-			let img=document.createElement("img");
+function genPastImg(i = 1) {
+	for (i; i <= 4; i++) {
+		let j = Math.floor(Math.random() * (pastEvetsImgArray.length - 0) + 0);
+		if (pastEvetsImgArray.length > 0) {
+			let img = document.createElement("img");
 			let a;
-			(i%2==0)? a='floatRight':a='floatLeft';
-			img.classList.add(`pastEventsImgN${i}`,'click',`${a}`);
-			img.src=`${pastEvetsImgArray[j]}`;
-			img.alt='event';
+			(i % 2 == 0) ? a = 'floatRight' : a = 'floatLeft';
+			img.classList.add(`pastEventsImgN${i}`, 'click', `${a}`);
+			img.src = `${pastEvetsImgArray[j]}`;
+			img.alt = 'event';
 			document.querySelector('#pastEventsImg').appendChild(img);
 			pastEvetsImgArray.splice(j, 1);
 		}
 	}
 }
 genPastImg();
- 
-let img=document.querySelectorAll('.click'),
-backPop = document.getElementById('backPop'),
-  popUp = document.getElementById('popUp'),
-  bigImg = document.getElementById('bigImg'),
-  inRight = document.querySelector('#inRight'),
-  inLeft = document.querySelector('#inLeft'),
-  nextSrc,next;
-  
-let listener= e => {
+
+const img = document.querySelectorAll('.click'),
+	backPop = document.getElementById('backPop'),
+	popUp = document.getElementById('popUp'),
+	bigImg = document.getElementById('bigImg'),
+	inRight = document.querySelector('#inRight'),
+	inLeft = document.querySelector('#inLeft'),
+	nextSrc, next;
+
+const listener = e => {
 	switch (e.keyCode) {
-		case 37:navigtionImg(2,img.length-1);
-		break;
-		case 39:navigtionImg(1,0);
-		break;
-		case 27:closeBigImg();
-		break;
-	  }
-	  }
+		case 37: navigtionImg(2, img.length - 1);
+			break;
+		case 39: navigtionImg(1, 0);
+			break;
+		case 27: closeBigImg();
+			break;
+	}
+}
 
 class Action {
-	constructor(elem){
-		this._elem=elem;
-		elem.onclick=this.onClick.bind(this);
+	constructor(elem) {
+		this._elem = elem;
+		elem.onclick = this.onClick.bind(this);
 	}
-	viewMore(){
-		if(pastEvetsImgArray.length>0){
+	viewMore() {
+		if (pastEvetsImgArray.length > 0) {
 			genPastImg();
-			}
-		else{
+		}
+		else {
 			window.open('https://pixabay.com/images/search/event/');
-		}	
+		}
 	}
-	inRight(){ navigtionImg('right',0)}
-	inLeft(){navigtionImg('left',img.length-1)}
-	viewMap(){
+	inRight() { navigtionImg('right', 0) }
+	inLeft() { navigtionImg('left', img.length - 1) }
+	viewMap() {
 		document.querySelector('#contactDetails').classList.add('displayNone');
 		document.querySelector('#showContact').classList.remove('displayNone');
 	};
-	showContact(){
+	showContact() {
 		document.querySelector('#contactDetails').classList.remove('displayNone');
 		document.querySelector('#showContact').classList.add('displayNone');
 	};
-	pastEventsImg(){
-		let src=event.target.src;
-		next= event.target;
+	pastEventsImg() {
+		let src = event.target.src;
+		next = event.target;
 		backPop.style.display = 'flex';
 		backPop.classList.remove('fadeOut');
 		backPop.classList.add('fadeIn');
 		window.addEventListener("keydown", listener);
-		bigImg.setAttribute('src',src);
+		bigImg.setAttribute('src', src);
 	}
-	backPop(elem){
+	backPop(elem) {
 		closeBigImg()
 	}
-	buttonElite(){
-		location.href='#contact';
+	buttonElite() {
+		location.href = '#contact';
 		document.querySelector('#contactDetails').classList.remove('displayNone');
 		document.querySelector('#showContact').classList.add('displayNone');
 
 	}
-	buttonSponsor(){
-		location.href='#contact';
+	buttonSponsor() {
+		location.href = '#contact';
 		document.querySelector('#contactDetails').classList.remove('displayNone');
 		document.querySelector('#showContact').classList.add('displayNone');
 
 	}
-	onClick(event){
-		let idButton=event.target;
-		if(event.target.closest('button')==null){
-			if(idButton.closest('div').id){
+	onClick(event) {
+		let idButton = event.target;
+		if (event.target.closest('button') == null) {
+			if (idButton.closest('div').id) {
 				this[event.target.closest('div').id](event)
 			}
 		}
-		else if (event.target.closest('button').id){
+		else if (event.target.closest('button').id) {
 			this[idButton.closest('button').id]()
 		}
 		else return false;
@@ -152,50 +150,50 @@ class Action {
 }
 new Action(main);
 
-function navigtionImg(a,index){
-	nextElem =(a=='right')? next.nextElementSibling:next.previousElementSibling;
-	next=nextElem;
-	if((next==null)||next.querySelector('div')){
+function navigtionImg(a, index) {
+	nextElem = (a == 'right') ? next.nextElementSibling : next.previousElementSibling;
+	next = nextElem;
+	if ((next == null) || next.querySelector('div')) {
 		nextSrc = img[index].getAttribute('src');
-		next=img[index];
+		next = img[index];
 	}
-    else nextSrc = nextElem.getAttribute('src');
+	else nextSrc = nextElem.getAttribute('src');
 	bigImg.setAttribute('src', nextSrc);
-  }
-function closeBigImg (elem) {
-    backPop.classList.add('fadeOut');
-    setTimeout(function() {
-      backPop.style.display = 'none'
+}
+function closeBigImg(elem) {
+	backPop.classList.add('fadeOut');
+	setTimeout(function () {
+		backPop.style.display = 'none'
 	}, 300);
 	window.removeEventListener("keydown", listener);
 }
 
-let clickTable=document.querySelectorAll('table .clickable .fa');
-for(let i=0;i<clickTable.length;i++){
-	let j=i+1;
-	if (i%2==0){
-		document.querySelector(`[aria-controls="group-of-rows-${j}"]`).classList+=' tbldDark';
-		document.querySelector('#group-of-rows-'+j).classList+=' tbldDark';
+const clickTable = document.querySelectorAll('table .clickable .fa');
+for (let i = 0; i < clickTable.length; i++) {
+	let j = i + 1;
+	if (i % 2 == 0) {
+		document.querySelector(`[aria-controls="group-of-rows-${j}"]`).classList += ' tbldDark';
+		document.querySelector('#group-of-rows-' + j).classList += ' tbldDark';
 	}
-	document.querySelector(`#group-of-rows-${j}`).classList+=' displayNone';
-	clickTable[i].onclick=function (){
+	document.querySelector(`#group-of-rows-${j}`).classList += ' displayNone';
+	clickTable[i].onclick = function () {
 		document.querySelector(`#group-of-rows-${j}`).classList.toggle('displayNone');
 	}
 }
 
 
 
-let mymap = L.map('map').setView([52.232238, 21.028800], 16);
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-	maxZoom: 18,id: 'mapbox.streets',
-	accessToken: 'pk.eyJ1IjoiZmVyaWEyMiIsImEiOiJja2Y4dDQzNXgwZmZ6MzFvOHllMjI2eWYzIn0.mX23jwy1IFDzMPfrXD48DQ'
-}).addTo(mymap);
-mymap.scrollWheelZoom.disable();
-
-let markforMap = L.icon({
-	iconUrl: 'img/marker.svg',
-	iconSize:     [25, 41], 
+mapboxgl.accessToken = 'pk.eyJ1IjoiZmVyaWEyMiIsImEiOiJja2Y4dDQzNXgwZmZ6MzFvOHllMjI2eWYzIn0.mX23jwy1IFDzMPfrXD48DQ';
+const map = new mapboxgl.Map({
+	container: 'map',
+	style: 'mapbox://styles/mapbox/streets-v11',
+	center: [21.028800, 52.232238],
+	zoom: 14,
 });
-L.marker([52.232238, 21.028896], {icon: markforMap}).addTo(mymap).bindPopup(`<img src="img/logo.png"><p>City: Warszawa</p><p>ul. Blablabla 9</p><p>000000000 numer</p>`);
 
+const marker = new mapboxgl.Marker()
+	.setLngLat([21.028896, 52.232238])
+	.addTo(map)
+	.setPopup(new mapboxgl.Popup().setHTML("<img src='img/logo.png'><p>City: Warszawa</p><p>ul. Blablabla 9</p><p>000000000 numer</p>"));
+
+marker.togglePopup()
