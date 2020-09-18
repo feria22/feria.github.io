@@ -69,7 +69,7 @@ function genPastImg(i = 1) {
 }
 genPastImg();
 
-const img = document.querySelectorAll('.click'),
+let img = document.querySelectorAll('.click'),
 	backPop = document.getElementById('backPop'),
 	popUp = document.getElementById('popUp'),
 	bigImg = document.getElementById('bigImg'),
